@@ -49,6 +49,7 @@ bool request_start_end;
 
 
 bool service(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res) {
+  std::cout<<"\n Request recieved... "<<std::endl;
   save_image_service = true;
   return true;
 }
@@ -107,7 +108,7 @@ public:
     }
 
     // save the image
-    std::string filename;
+    std::string filename="/home/pablo/catkin_ws/src";
     if (!saveImage(image_msg, filename))
       return;
 
@@ -206,7 +207,7 @@ int main(int argc, char** argv)
   std::string format_string;
   local_nh.param("filename_format", format_string, std::string("left%04i.%s"));
   local_nh.param("encoding", encoding, std::string("bgr8"));
-  local_nh.param("save_all_image", save_all_image, true);
+  local_nh.param("save_all_image", save_all_image, false);
   local_nh.param("request_start_end", request_start_end, false);
   g_format.parse(format_string);
   ros::ServiceServer save = local_nh.advertiseService ("save", service);
